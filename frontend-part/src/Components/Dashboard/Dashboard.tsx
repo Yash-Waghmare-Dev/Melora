@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PostForm from '../Post/PostForm';
+import Logout from '../Logout/Logout';
 import './dashboard.css';
 
 const Dashboard: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  // Get username from navigation state or fallback
   const username = location.state?.username || 'JohnDoe';
   const email = `${username.toLowerCase()}@example.com`;
   const [posts, setPosts] = useState<{ title: string; desc: string }[]>([]);
@@ -16,7 +15,8 @@ const Dashboard: React.FC = () => {
   };
 
   const handleLogout = () => {
-    navigate('/');
+    setPosts([]); // Clear posts
+    // In a real app, also clear user context/state here
   };
 
   return (
@@ -47,9 +47,7 @@ const Dashboard: React.FC = () => {
 
       {/* Right Panel: Logout */}
       <aside className="dashboard-right">
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
+        <Logout onLogout={handleLogout} />
       </aside>
     </div>
   );
