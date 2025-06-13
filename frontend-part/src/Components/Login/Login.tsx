@@ -65,17 +65,10 @@ const Login: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError('Both fields are required.');
-      return;
-    }
-    setError('');
-    // Dummy validation for demo
-    if (username === 'admin' && password === 'admin') {
-      navigate('/dashboard');
-    } else {
-      alert('Invalid credentials');
-    }
+    // Prototype: always redirect to dashboard after submit
+    navigate('/dashboard');
+    console.log(setError);
+    
   };
 
   const handleForgotPassword = (
