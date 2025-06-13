@@ -1,29 +1,18 @@
-/* Login.css */
-
-.login-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3f4f6;
-}
-
-.login-main {
+.registration-main {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
-  /* Ensure full viewport centering */
   width: 100vw;
   box-sizing: border-box;
 }
 
-.login-form {
+.registration-form {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   min-width: 320px;
   max-width: 360px;
   margin: 0 auto;
@@ -32,7 +21,7 @@
   align-items: center;
 }
 
-.login-title {
+.registration-title {
   margin-bottom: 24px;
   text-align: center;
   color: #1976d2;
@@ -84,40 +73,4 @@
 .form-button:disabled {
   background: #90caf9;
   cursor: not-allowed;
-}
-
-.login-links {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-.login-link {
-  margin-top: 16px;
-  text-align: center;
-  width: 100%;
-}
-
-.login-link a {
-  color: #1976d2;
-  text-decoration: none;
-  font-size: 14px;
-  outline: none;
-}
-
-.login-link a:focus {
-  text-decoration: underline;
-}
-
-.link-button {
-  background: none;
-  border: none;
-  color: #3b82f6;
-  cursor: pointer;
-  padding: 0;
-}
-
-.link-button:hover {
-  text-decoration: underline;
 }

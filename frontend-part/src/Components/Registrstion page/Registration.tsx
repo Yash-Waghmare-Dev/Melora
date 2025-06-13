@@ -1,0 +1,92 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Registration.css';
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const Registration = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleRegister = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    if (!username || !email || !password || !confirmPassword) {
+      setError('All fields are required.');
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setError('');
+    navigate('/'); // Redirect to login page
+  };
+
+  return (
+    <main className="registration-main">
+      <form className="registration-form" onSubmit={handleRegister} aria-label="Registration Form">
+        <h2 className="registration-title">Register</h2>
+        <div className="form-group">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input
+            id="username"
+            className="form-input"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+            autoFocus
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email</label>
+          <input
+            id="email"
+            className="form-input"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            id="password"
+            className="form-input"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            className="form-input"
+            type="password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        {error && (
+          <div className="form-error" role="alert">
+            {error}
+          </div>
+        )}
+        <button type="submit" className="form-button">Register</button>
+      </form>
+    </main>
+  );
+};
+
+export default Registration;

@@ -123,6 +123,16 @@ const Login: React.FC = () => {
             Forgot Password?
           </a>
         </div>
+        <div className="login-link">
+          <button
+            type="button"
+            className="form-button"
+            style={{ marginTop: 8 }}
+            onClick={() => navigate('/register')}
+          >
+            Register
+          </button>
+        </div>
       </form>
     </main>
   );
