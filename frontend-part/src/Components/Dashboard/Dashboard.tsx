@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import PostForm from '../Post/PostForm';
 import './dashboard.css';
 
 const Dashboard: React.FC = () => {
-  // Dummy user data (could be replaced with context or props)
-  const [user] = useState({
-    username: 'JohnDoe',
-    email: 'john.doe@example.com',
-  });
-  const [postTitle, setPostTitle] = useState('');
-  const [postDesc, setPostDesc] = useState('');
-  const [posts, setPosts] = useState<{ title: string; desc: string }[]>([]);
+  const location = useLocation();
   const navigate = useNavigate();
+  // Get username from navigation state or fallback
+  const username = location.state?.username || 'JohnDoe';
+  const email = `${username.toLowerCase()}@example.com`;
+  const [posts, setPosts] = useState<{ title: string; desc: string }[]>([]);
 
-  const handlePost = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (postTitle && postDesc) {
-      setPosts([{ title: postTitle, desc: postDesc }, ...posts]);
-      setPostTitle('');
-      setPostDesc('');
-    }
+  const handleCreatePost = (title: string, desc: string) => {
+    setPosts([{ title, desc }, ...posts]);
   };
 
   const handleLogout = () => {
@@ -29,45 +22,19 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       {/* Left Panel: User Profile */}
-      <aside className="dashboard-panel dashboard-left">
+      <aside className="dashboard-left">
         <div className="profile-card">
-          <div className="profile-avatar">{user.username[0]}</div>
+          <div className="profile-avatar">{username[0]}</div>
           <div className="profile-info">
-            <div className="profile-username">{user.username}</div>
-            <div className="profile-email">{user.email}</div>
+            <div className="profile-username">{username}</div>
+            <div className="profile-email">{email}</div>
           </div>
         </div>
       </aside>
 
-      {/* Center Panel: Post Creation */}
-      <main className="dashboard-panel dashboard-center">
-        <form className="post-form" onSubmit={handlePost}>
-          <h2 className="post-form-title">Create Post</h2>
-          <div className="form-group">
-            <label htmlFor="postTitle" className="form-label">Title</label>
-            <input
-              id="postTitle"
-              className="form-input"
-              value={postTitle}
-              onChange={e => setPostTitle(e.target.value)}
-              required
-              placeholder="Enter post title"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="postDesc" className="form-label">Description</label>
-            <textarea
-              id="postDesc"
-              className="form-input"
-              value={postDesc}
-              onChange={e => setPostDesc(e.target.value)}
-              required
-              placeholder="Enter post description"
-              rows={4}
-            />
-          </div>
-          <button type="submit" className="form-button">Post</button>
-        </form>
+      {/* Center Panel: Post Creation and List */}
+      <main className="dashboard-center">
+        <PostForm onCreate={handleCreatePost} />
         <div className="post-list">
           {posts.map((post, idx) => (
             <div className="post-item" key={idx}>
@@ -79,7 +46,7 @@ const Dashboard: React.FC = () => {
       </main>
 
       {/* Right Panel: Logout */}
-      <aside className="dashboard-panel dashboard-right">
+      <aside className="dashboard-right">
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>

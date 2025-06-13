@@ -62,13 +62,12 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  console.log(setError);
+  
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Prototype: always redirect to dashboard after submit
-    navigate('/dashboard');
-    console.log(setError);
-    
+    // Pass username to dashboard via navigation state
+    navigate('/dashboard', { state: { username } });
   };
 
   const handleForgotPassword = (
