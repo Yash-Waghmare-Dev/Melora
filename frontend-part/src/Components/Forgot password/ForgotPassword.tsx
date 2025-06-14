@@ -4,19 +4,24 @@ import './ForgotPassword.css';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [touched, setTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email) {
+      return;
+    }
     setSubmitted(true);
     setTimeout(() => {
       navigate('/');
-    }, 2000); // Redirect after 2 seconds
+    }, 5000); // Redirect after 5 seconds
   };
 
   return (
     <main className="forgot-main">
+      <h1 className="app-title">Melora</h1>
       <form className="forgot-form" onSubmit={handleSubmit} aria-label="Forgot Password Form">
         <h2 className="forgot-title">Forgot Password</h2>
         {submitted ? (
@@ -34,9 +39,11 @@ const ForgotPassword: React.FC = () => {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                onBlur={() => setTouched(true)}
                 required
                 autoFocus
               />
+              {touched && !email && <div className="input-message">Email is required.</div>}
             </div>
             <button type="submit" className="form-button">Submit</button>
           </>

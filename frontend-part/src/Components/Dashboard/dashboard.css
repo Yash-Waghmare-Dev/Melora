@@ -1,3 +1,7 @@
+body, html {
+  overflow: hidden;
+}
+
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -170,22 +174,72 @@
 }
 
 .post-item {
-  background: #f8fafd;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-  padding: 1rem 1.2rem;
-  margin-bottom: 1rem;
+  background: #fafbfc;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
-.post-title {
-  font-weight: bold;
-  color: #1976d2;
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0.5rem;
 }
 
+.post-username {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.post-time {
+  font-size: 0.95rem;
+  color: #888;
+  margin-left: auto;
+}
+
+.post-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
 .post-desc {
+  margin-bottom: 0.7rem;
   color: #333;
+}
+
+.post-image {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 8px;
+  margin-bottom: 0.7rem;
+  object-fit: contain;
+  border: 1px solid #eee;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.post-action-btn {
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-weight: 500;
+  cursor: pointer;
   font-size: 1rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.post-action-btn:hover {
+  background: #e3eafd;
 }
 
 .logout-button {
@@ -202,6 +256,77 @@
 
 .logout-button:hover {
   background: #b71c1c;
+}
+
+.post-comments {
+  margin-top: 1rem;
+  background: #f4f6fa;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.add-comment, .add-reply {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment-input, .reply-input {
+  flex: 1;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.comment-btn, .reply-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.comment-btn:hover, .reply-btn:hover {
+  background: #1565c0;
+}
+
+.comment-item {
+  margin-bottom: 0.7rem;
+  padding-left: 0.2rem;
+}
+
+.comment-user {
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.replies {
+  margin-left: 1.5rem;
+  margin-top: 0.3rem;
+}
+
+.reply-item {
+  margin-bottom: 0.3rem;
+}
+
+.reply-user {
+  font-weight: 500;
+  color: #388e3c;
+}
+
+.app-title {
+  text-align: center;
+  width: 100%;
+  margin: 2.5rem 0 1.5rem 0;
+  font-size: 2.5rem;
+  color: #646cff;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1200px) {

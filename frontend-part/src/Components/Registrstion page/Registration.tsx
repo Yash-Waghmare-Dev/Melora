@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Registration.css';
 
@@ -10,6 +10,7 @@ const Registration = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [touched, setTouched] = useState({ username: false, email: false, password: false });
   const navigate = useNavigate();
 
   const handleRegister = (e: { preventDefault: () => void; }) => {
@@ -32,40 +33,47 @@ const Registration = () => {
 
   return (
     <main className="registration-main">
+      <h1 className="app-title">Melora</h1>
       <form className="registration-form" onSubmit={handleRegister} aria-label="Registration Form">
         <h2 className="registration-title">Register</h2>
         <div className="form-group">
-          <label htmlFor="username" className="form-label">Username</label>
+          <label htmlFor="reg-username" className="form-label">Username</label>
           <input
-            id="username"
+            id="reg-username"
             className="form-input"
             value={username}
             onChange={e => setUsername(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, username: true }))}
             required
             autoFocus
           />
+          {touched.username && !username && <div className="input-message">Username is required.</div>}
         </div>
         <div className="form-group">
-          <label htmlFor="email" className="form-label">Email</label>
+          <label htmlFor="reg-email" className="form-label">Email</label>
           <input
-            id="email"
+            id="reg-email"
             className="form-input"
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, email: true }))}
             required
           />
+          {touched.email && !email && <div className="input-message">Email is required.</div>}
         </div>
         <div className="form-group">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="reg-password" className="form-label">Password</label>
           <input
-            id="password"
+            id="reg-password"
             className="form-input"
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, password: true }))}
             required
           />
+          {touched.password && !password && <div className="input-message">Password is required.</div>}
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>

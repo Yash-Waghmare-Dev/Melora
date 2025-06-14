@@ -57,3 +57,42 @@
   background: #90caf9;
   cursor: not-allowed;
 }
+
+.image-upload-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.image-upload-label {
+  background: #f5f6fa;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  color: #1976d2;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.image-upload-label:hover {
+  background: #e3eafd;
+  border-color: #1976d2;
+}
+
+.image-upload-input {
+  display: none;
+}
+
+.post-image-preview {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #eee;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}

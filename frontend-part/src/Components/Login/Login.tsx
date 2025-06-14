@@ -2,40 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const FormInput: React.FC<{
-  id: string;
-  label: string;
-  type?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
-  autoFocus?: boolean;
-}> = ({
-  id,
-  label,
-  type = 'text',
-  value,
-  onChange,
-  required = false,
-  autoFocus = false,
-}) => (
-  <div className="form-group">
-    <label htmlFor={id} className="form-label">
-      {label}
-    </label>
-    <input
-      id={id}
-      className="form-input"
-      type={type}
-      value={value}
-      onChange={onChange}
-      required={required}
-      autoFocus={autoFocus}
-      aria-required={required}
-    />
-  </div>
-);
-
 const FormButton: React.FC<{
   type?: 'button' | 'submit';
   children: React.ReactNode;
@@ -61,11 +27,16 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [touched, setTouched] = useState<{ username: boolean; password: boolean }>({ username: false, password: false });
   const navigate = useNavigate();
-  console.log(setError);
   
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!username || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    setError('');
     // Pass username to dashboard via navigation state
     navigate('/dashboard', { state: { username } });
   };
@@ -79,29 +50,36 @@ const Login: React.FC = () => {
 
   return (
     <main className="login-main">
+      <h1 className="app-title">Melora</h1>
       <form className="login-form" onSubmit={handleLogin} aria-label="Login Form">
         <h2 className="login-title">Login</h2>
-        <FormInput
-          id="username"
-          label="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          required
-          autoFocus
-        />
-        <FormInput
-          id="password"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        {error && (
-          <div className="form-error" role="alert">
-            {error}
-          </div>
-        )}
+        <div className="form-group">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input
+            id="username"
+            className="form-input"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, username: true }))}
+            required
+            autoFocus
+          />
+          {touched.username && !username && <div className="input-message">Username is required.</div>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            id="password"
+            className="form-input"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onBlur={() => setTouched(t => ({ ...t, password: true }))}
+            required
+          />
+          {touched.password && !password && <div className="input-message">Password is required.</div>}
+        </div>
+        {error && <div className="form-error" role="alert">{error}</div>}
         <FormButton type="submit">Login</FormButton>
         <div className="login-link">
           <a

@@ -2,19 +2,34 @@ import React, { useState } from 'react';
 import './PostForm.css';
 
 interface PostFormProps {
-  onCreate: (title: string, desc: string) => void;
+  onCreate: (title: string, desc: string, image?: string) => void;
 }
 
 const PostForm: React.FC<PostFormProps> = ({ onCreate }) => {
   const [postTitle, setPostTitle] = useState('');
   const [postDesc, setPostDesc] = useState('');
+  const [postImage, setPostImage] = useState<string | undefined>(undefined);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPostImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPostImage(undefined);
+    }
+  };
 
   const handlePost = (e: React.FormEvent) => {
     e.preventDefault();
     if (postTitle && postDesc) {
-      onCreate(postTitle, postDesc);
+      onCreate(postTitle, postDesc, postImage);
       setPostTitle('');
       setPostDesc('');
+      setPostImage(undefined);
     }
   };
 
@@ -43,6 +58,21 @@ const PostForm: React.FC<PostFormProps> = ({ onCreate }) => {
           placeholder="Enter post description"
           rows={4}
         />
+      </div>
+      <div className="image-upload-group">
+        <label htmlFor="postImage" className="image-upload-label">
+          <span role="img" aria-label="Upload">📷</span> Upload Image
+          <input
+            id="postImage"
+            className="image-upload-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+        </label>
+        {postImage && (
+          <img src={postImage} alt="Preview" className="post-image-preview" />
+        )}
       </div>
       <button type="submit" className="form-button">Post</button>
     </form>
