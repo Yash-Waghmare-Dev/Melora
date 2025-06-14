@@ -13,7 +13,7 @@ const Registration = () => {
   const [touched, setTouched] = useState({ username: false, email: false, password: false });
   const navigate = useNavigate();
 
-  const handleRegister = (e: { preventDefault: () => void; }) => {
+  const handleRegister = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!username || !email || !password || !confirmPassword) {
       setError('All fields are required.');
@@ -28,7 +28,29 @@ const Registration = () => {
       return;
     }
     setError('');
-    navigate('/'); // Redirect to login page
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        setError(message);
+        return;
+      }
+
+      // Registration successful, redirect to login page
+      alert('Registration successful! Please login.');
+      navigate('/');
+    } catch (error) {
+      console.error('Registration error:', error);
+      setError('An error occurred. Please try again later.');
+    }
   };
 
   return (
